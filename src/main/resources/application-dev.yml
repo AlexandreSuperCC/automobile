@@ -3,9 +3,38 @@ server:
   port: 8084
 
 spring:
-  #DataSource configuration
+  # DataSource configuration
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/mo_cantine?useSSL=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    url: jdbc:mysql://127.0.0.1:3306/mo_automobile?useSSL=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
     username: root
     password: '0423'
+  # configure thymeleaf
+  jpa:
+    database: mysql
+    # Show or not log for each sql query
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      # Hibernate ddl auto (create, create-drop, update)
+      ddl-auto: none
+      naming_strategy: org.hibernate.cfg.DefaultNamingStrategy
+    properties:
+      hibernate:
+        # stripped before adding them to the entity manager
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  web:
+    resources:
+      # Configuration of static resource paths
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+  groovy:
+    template:
+      cache: false
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
