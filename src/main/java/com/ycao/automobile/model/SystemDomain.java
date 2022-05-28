@@ -7,6 +7,9 @@ import java.util.List;
 @Table(name = "t_systeme")
 public class SystemDomain {
 
+    private static final long serialVersionUID = 1l;
+
+
     @Id
     private Integer id;
 

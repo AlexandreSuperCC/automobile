@@ -13,12 +13,13 @@ spring:
   jpa:
     database: mysql
     # Show or not log for each sql query
-    show-sql: true
+    show-sql: false
     generate-ddl: false
     hibernate:
       # Hibernate ddl auto (create, create-drop, update)
       ddl-auto: none
       naming_strategy: org.hibernate.cfg.DefaultNamingStrategy
+      enable_lazy_load_no_trans: true
     properties:
       hibernate:
         # stripped before adding them to the entity manager
@@ -38,3 +39,4 @@ spring:
     servlet:
       content-type: text/html
     cache: false
+

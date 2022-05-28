@@ -1,5 +1,6 @@
 package com.ycao.automobile.service;
 
+import com.ycao.automobile.model.ProductDomain;
 import com.ycao.automobile.model.SystemDomain;
 
 import java.util.List;
@@ -19,4 +20,11 @@ public interface IShopService {
      * @return
      */
     Integer getAllProductsNum();
+
+    /**
+     * get the products which is of this sub-piece type
+     * @param pdid the id of the sub-piece
+     * @return
+     */
+    List<ProductDomain> getAllProductsWithPdid(Integer pdid);
 }

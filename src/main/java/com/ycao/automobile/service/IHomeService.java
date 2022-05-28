@@ -24,6 +24,12 @@ public interface IHomeService {
      */
     List<ProductDomain> getLatestProductHasComments(Integer... limitArg);
     /**
+     * get latest product who has comments come first
+     * @param limitArg the limit array
+     * @return
+     */
+    List<ProductDomain> getLatestProductCommentsPriority(Integer... limitArg);
+    /**
      * get top sold-well products
      * @param limitArg the limit array
      * @return

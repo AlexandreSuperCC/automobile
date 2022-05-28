@@ -131,7 +131,7 @@
 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.html">Cart - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="cart">Cart - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
                     </div>
                 </div>
             </div>
@@ -193,7 +193,7 @@
                                 <a th:text="${piece.name}"></a>
                                 <ul class="dropdown-menu">
                                     <li th:each="subPiece : ${piece.subPieceDomainList}">
-                                        <a th:text="${subPiece.name}" href="javascript:;" th:attr="data-pdid=${subPiece.id},data-pid=${piece.id},data-sid=${system.id}" onclick="getCategory(this)"></a>
+                                        <a th:text="${subPiece.name}" href="javascript:;" th:attr="data-pdid=${subPiece.id},data-pdname=${subPiece.name},data-pname=${piece.name},data-sname=${system.name}" onclick="getProductsWithPdid(this)"></a>
                                     </li>
                                 </ul>
                             </li>
@@ -209,43 +209,28 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-                <div th:each="product:${allProductsInCat}" class="col-md-3 col-sm-6">
+                <div th:each="product : ${first28Products}" class="col-md-3 col-sm-6">
                     <div class="single-shop-product">
                         <div class="product-upper">
-                            <img th:src="{product.imgUrl}" alt="">
+                            <img th:src="${product.imgUrl}" alt="">
                         </div>
                         <h2><a href="" th:text="${product.name}"></a></h2>
                         <div class="product-carousel-price">
-                            <ins th:text="${product.price}"></ins> <del th:text="${product.vdef2}" th:if="${not #strings.isEmpty(product.vdef2)}"></del>
+                            <ins th:text="${product.price}"></ins>
                         </div>
-
                         <div class="product-option-shop">
                             <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="product-pagination text-center">
                         <nav>
                             <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
+                                <li th:each="pageNum:${#numbers.sequence(1, #numbers.formatInteger(numProducts/28,0))}"><a href="javascript:;" th:text="${pageNum}" th:attr="data-pageNum=${pageNum}" onclick="lazyGetProducts(this)"></a></li>
                             </ul>
                         </nav>
                     </div>
@@ -347,28 +332,121 @@
     <!-- Main Script -->
     <script src="js/main.js"></script>
     <script>
-        function getCategory(obj) {
-            var subPieceId = $(obj).data('pdid');
-            var pieceId = $(obj).data('pid');
-            var systemId = $(obj).data('sid');
-            var pieceArr,subPieceArr,productArr;
-            for(var sys in [[${allSystems}]]){
-                if(sys.id===systemId) {
-                    pieceArr = sys.pieceDomainList;
+        function getProductsWithPdid(obj) {
+            let subPieceId = $(obj).data('pdid');
+            let subPieceName = $(obj).data('pdname');
+            let pieceName = $(obj).data('pname');
+            let systemName = $(obj).data('sname');
+
+            $.ajax({
+                url: "/shop/product/"+subPieceId,// request url
+                data:{},// request parameters -- none
+                type:"get",
+                dataType:"json",// The data type returned by the server is the json object
+                success: function(resp) {
+                    console.log(resp.data);
+                    showProducts(resp.data,subPieceName,pieceName,systemName);
+                },
+                timeout: 50000,// Timeout time, the function after error will be called after the timeout
+                error: function(xhr, textStatus, errorThrown) {
+
+                    // 404 Invalid request address
+                    if(XMLHttpRequest.status=='404'){
+                        alert("404:request address"+url+"invalid.");
+                        return;
+                    }
+
+                    let msg="xhr.readyState="+xhr.readyState+"\n";
+                    msg+="xhr.status="+xhr.status+"\n";
+                    msg+="textStatus="+textStatus+"\n";
+                    msg+="errorThrown="+errorThrown+"\n";
+                    alert(msg);
                 }
+
+            });
+        }
+        function showProducts(productsArr,subPieceName,pieceName,systemName){
+            document.querySelector('body > div.container > div > h2').innerHTML=productsArr.length>0?productsArr.length+' produits trouvés':'Aucun produit trouvé';
+            document.querySelector('#dLabel').innerHTML= systemName +' | '+ pieceName +' | '+ subPieceName;
+
+            // fatherEle.innerHTML=""
+            $("body > div.single-product-area > div.container > div:nth-child(1)").empty();
+            for(let product of productsArr){
+                let html1 = `
+                        <div class="col-md-3 col-sm-6">
+                            <div class="single-shop-product">
+                                <div class="product-upper">
+                                    <img src=${product.imgUrl} alt="">
+                                </div>
+                                <h2><a href="">${product.name}</a></h2>
+                                <div class="product-carousel-price">
+                                    <ins>${product.price}</ins>`
+
+                 let html2 = product.vdef2?`<del>${product.vdef2}</del>`:''
+                 let html3 =               `</div>
+                                <div class="product-option-shop">
+                                    <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>`
+                $("body > div.single-product-area > div.container > div:nth-child(1)").append(html1+html2+html3);
             }
-            for(var piece in pieceArr) {
-                if (piece.id === pieceId) {
-                    subPieceArr = piece.subPieceDomainList;
+        }
+        function lazyGetProducts(obj) {
+            console.log(obj);
+            let pageNum = $(obj).data('pagenum');
+
+            $.ajax({
+                url: "/shop/productLists/"+pageNum,// request url
+                data:{},// request parameters -- none
+                type:"get",
+                dataType:"json",// The data type returned by the server is the json object
+                success: function(resp) {
+                    console.log(resp.data);
+                    showPageProducts(resp.data);
+                },
+                timeout: 50000,// Timeout time, the function after error will be called after the timeout
+                error: function(xhr, textStatus, errorThrown) {
+
+                    // 404 Invalid request address
+                    if(XMLHttpRequest.status=='404'){
+                        alert("404:request address"+url+"invalid.");
+                        return;
+                    }
+
+                    let msg="xhr.readyState="+xhr.readyState+"\n";
+                    msg+="xhr.status="+xhr.status+"\n";
+                    msg+="textStatus="+textStatus+"\n";
+                    msg+="errorThrown="+errorThrown+"\n";
+                    alert(msg);
                 }
+
+            });
+        }
+        function showPageProducts(productsArr){
+
+            // fatherEle.innerHTML=""
+            $("body > div.single-product-area > div.container > div:nth-child(1)").empty();
+            for(let product of productsArr){
+                let html1 = `
+                        <div class="col-md-3 col-sm-6">
+                            <div class="single-shop-product">
+                                <div class="product-upper">
+                                    <img src=${product.imgUrl} alt="">
+                                </div>
+                                <h2><a href="">${product.name}</a></h2>
+                                <div class="product-carousel-price">
+                                    <ins>${product.price}</ins>`
+
+                let html2 = product.vdef2?`<del>${product.vdef2}</del>`:''
+                let html3 =               `</div>
+                                <div class="product-option-shop">
+                                    <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>`
+                $("body > div.single-product-area > div.container > div:nth-child(1)").append(html1+html2+html3);
             }
-            for(var subPiece in subPieceArr) {
-                if (subPiece.id === subPieceId) {
-                    productArr = piece.productDomainList;
-                }
-            }
-            [[${allProductsInCat}]] = productArr;
-            console.log(systemId+':'+pieceId+':'+subPieceId);
         }
     </script>
   </body>
