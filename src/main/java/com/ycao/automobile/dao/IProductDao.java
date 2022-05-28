@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IProductDao extends JpaRepository<ProductDomain,Integer> {
 
@@ -51,4 +52,34 @@ public interface IProductDao extends JpaRepository<ProductDomain,Integer> {
 
     @Query(nativeQuery=true, value ="SELECT * from t_produit where pdid=:pdid and dr = 0 ")
     List<ProductDomain> getAllProductsWithPdid(@Param(value = "pdid") Integer pdid);
+
+    @Query(nativeQuery=true, value ="SELECT * from t_produit where id=:id ")
+    ProductDomain getSingleProduct(@Param(value = "id") Integer id);
+
+    @Query(nativeQuery=true, value ="SELECT * from t_produit where dr=0 and status=0 order by rate desc, ts desc limit 1 ")
+    ProductDomain getBestProduct();
+
+    @Query(nativeQuery=true, value ="SELECT s.NAME sname, p.NAME pname, pd.NAME pdname FROM t_systeme s INNER JOIN t_piece p ON s.id = p.sid INNER JOIN t_piece_detaillee pd ON pd.pid = p.id INNER JOIN t_produit pro ON pro.pdid = pd.id WHERE pro.id = :id ")
+    Map<String,Object> findCatNameByProductId(@Param(value = "id") Integer id);
+
+    @Query(nativeQuery=true, value ="SELECT * from t_produit where id!=:id and dr = 0 and name like %:name% ORDER BY rate desc, ts desc limit :start,:num")
+    List<ProductDomain> getRelatedProducts(@Param(value = "name") String name,@Param(value = "id") int id,@Param(value = "start") int start, @Param(value = "num") int num);
+
+    /**
+     * get high rate product who has comments and in the same category
+     * @param start where starts, includes it
+     * @param num how many comments are wanted
+     * @return ProductDomain
+     */
+    @Query(nativeQuery=true, value ="SELECT * FROM t_produit p where p.dr=0 and p.pdid=:pdid ORDER BY p.rate desc, p.ts desc limit :start,:num ")
+    List<ProductDomain> getRateProductSameCat(@Param(value = "pdid") int pdid,@Param(value = "start") int start, @Param(value = "num") int num);
+
+    /**
+     * get latest product who has comments and in the same category
+     * @param start where starts, includes it
+     * @param num how many products are wanted
+     * @return ProductDomain
+     */
+    @Query(nativeQuery=true, value ="SELECT * FROM t_produit p where p.dr=0 and p.pdid=:pdid ORDER BY p.ts desc, p.rate desc limit :start,:num ")
+    List<ProductDomain> getLatestProductSameCat(@Param(value = "pdid") int pdid, @Param(value = "start") int start, @Param(value = "num") int num);
 }

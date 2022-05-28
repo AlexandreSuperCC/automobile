@@ -29,23 +29,8 @@ public class HomeController extends BaseController {
         List<ProductDomain> bestSoldProducts = iHomeService.getBestSeller(3);
         request.setAttribute("bestSoldProducts", bestSoldProducts);
 
-//        // 取最新的20条日志
-//        PageInfo<LogDomain> logs = logService.getLogs(1, 5);
-//        List<LogDomain> list = logs.getList();
-//        request.setAttribute("comments", comments);
-//        request.setAttribute("articles", contents);
-//        request.setAttribute("statistics", statistics);
-//        request.setAttribute("logs", list);
         LOGGER.info("Exit index method");
         return "home/index";
-    }
-
-
-    @GetMapping(value = {"/single-product"})
-    public String enterSingleProduct(HttpServletRequest request){
-        LOGGER.info("Enter single-product method");
-        LOGGER.info("Exit single-product method");
-        return "home/single-product";
     }
 
     @GetMapping(value = {"/cart"})

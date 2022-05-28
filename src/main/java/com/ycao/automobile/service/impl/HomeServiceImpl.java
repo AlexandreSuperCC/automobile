@@ -20,7 +20,7 @@ public class HomeServiceImpl implements IHomeService {
     @Override
     @Cacheable(cacheNames = "highNoteProductsCaches",keyGenerator="myKeyGenerator")
     public List<ProductDomain> getHighNoteProductHasComments(Integer... limitArg) {
-        if(limitArg.length>2){
+        if(limitArg==null||limitArg.length>2){
             throw BusinessException.withErrorCode(ErrorConstant.Common.PARAM_NOT_VALID);
         }
         List<ProductDomain> productDomains;
@@ -29,6 +29,7 @@ public class HomeServiceImpl implements IHomeService {
         }else{
             productDomains = iProductDao.getRateProduct(limitArg[0],limitArg[1]);
         }
+        //because in the page, we use the number of stars (5/5) to describe note, so transfer it to integer
         productDomains.forEach(e ->
                 e.setVdef2(MyUtils.strToInt(e.getRate())));
         return productDomains;
@@ -37,7 +38,7 @@ public class HomeServiceImpl implements IHomeService {
     @Override
     @Cacheable(cacheNames = "latestProductsCCaches",keyGenerator="myKeyGenerator")
     public List<ProductDomain> getLatestProductHasComments(Integer... limitArg) {
-        if(limitArg.length>2){
+        if(limitArg==null||limitArg.length>2){
             throw BusinessException.withErrorCode(ErrorConstant.Common.PARAM_NOT_VALID);
         }
         List<ProductDomain> productDomains;
@@ -46,6 +47,7 @@ public class HomeServiceImpl implements IHomeService {
         }else{
             productDomains = iProductDao.getLatestProduct(limitArg[0],limitArg[1]);
         }
+        //because in the page, we use the number of stars (5/5) to describe note, so transfer it to integer
         productDomains.forEach(e ->{
             if(e.getRate()!=null){
                 e.setVdef2(MyUtils.strToInt(e.getRate()));
@@ -56,15 +58,16 @@ public class HomeServiceImpl implements IHomeService {
     @Override
     @Cacheable(cacheNames = "bestSellersCaches",keyGenerator="myKeyGenerator")
     public List<ProductDomain> getBestSeller(Integer... limitArg){
-        if(limitArg.length>2){
+        if(limitArg==null||limitArg.length>2){
             throw BusinessException.withErrorCode(ErrorConstant.Common.PARAM_NOT_VALID);
         }
         List<ProductDomain> productDomains;
         if (limitArg.length==1){
             productDomains = iProductDao.getBestSeller(0,limitArg[0]);
         }else{
-            productDomains = iProductDao.getBestSeller(0,limitArg[0]);
+            productDomains = iProductDao.getBestSeller(limitArg[0],limitArg[1]);
         }
+        //because in the page, we use the number of stars (5/5) to describe note, so transfer it to integer
         productDomains.forEach(e ->
                 e.setVdef2(MyUtils.strToInt(e.getRate())));
         return productDomains;
@@ -73,7 +76,7 @@ public class HomeServiceImpl implements IHomeService {
     @Override
     @Cacheable(cacheNames = "latestProductsCFCaches",keyGenerator="myKeyGenerator")
     public List<ProductDomain> getLatestProductCommentsPriority(Integer... limitArg) {
-        if(limitArg.length>2){
+        if(limitArg==null||limitArg.length>2){
             throw BusinessException.withErrorCode(ErrorConstant.Common.PARAM_NOT_VALID);
         }
         List<ProductDomain> productDomains;

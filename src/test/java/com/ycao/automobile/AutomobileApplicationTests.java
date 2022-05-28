@@ -1,6 +1,8 @@
 package com.ycao.automobile;
 
+import com.ycao.automobile.dao.IProductDao;
 import com.ycao.automobile.dao.ISystemDao;
+import com.ycao.automobile.model.ProductDomain;
 import com.ycao.automobile.model.SystemDomain;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,20 @@ class AutomobileApplicationTests {
     @Autowired
     ISystemDao iSystemDao;
 
+    @Autowired
+    IProductDao iProductDao;
+
     @Test
     void hibernateTest() {
         List<SystemDomain> systemDomains = iSystemDao.getAllSystem();
         System.out.println(systemDomains);
+        System.out.println("ok");
+    }
+
+    @Test
+    void productTest() {
+        List<ProductDomain> productDomains = iProductDao.getRelatedProducts("frein",0,0,5);
+        System.out.println(productDomains);
         System.out.println("ok");
     }
 }

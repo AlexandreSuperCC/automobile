@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:method="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,15 +12,15 @@
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
     
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -77,7 +77,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./"><img src="img/logo.png"></a></h1>
+                        <h1><a href="./"><img src="/img/logo.png"></a></h1>
                     </div>
                 </div>
                 
@@ -104,10 +104,10 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="index">Home</a></li>
-                        <li><a href="shop">Shop page</a></li>
-                        <li><a href="single-product">Single produit</a></li>
-                        <li><a href="cart">Panier</a></li>
-                        <li><a href="checkout">Achetez</a></li>
+                        <li><a href="/shop">Shop page</a></li>
+                        <li><a href="/single-product">Single produit</a></li>
+                        <li><a href="/cart">Panier</a></li>
+                        <li><a href="/checkout">Achetez</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </div>  
@@ -124,7 +124,7 @@
 						<div class="caption-group">
 							<h2 class="caption title" th:text="${product.name}">
 							</h2>
-							<a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
+							<a class="caption button-radius" th:href="@{/product/{id}(id=${product.id})}"><span class="icon"></span>Shop now</a>
 						</div>
 					</li>
 				</ul>
@@ -176,11 +176,11 @@
                                 <div class="product-f-image">
                                     <img th:src="${product.imgUrl}" alt="">
                                     <div class="product-hover">
-                                        <a href="single-produit" class="view-details-link"><i class="fa fa-link"></i> Voir les détails</a>
+                                        <a th:href="@{/product/{id}(id=${product.id})}" class="view-details-link"><i class="fa fa-link"></i> Voir les détails</a>
                                     </div>
                                 </div>
                                 
-                                <h2><a href="single-produit" th:text="${product.name}"></a></h2>
+                                <h2><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a></h2>
                                 
                                 <div class="product-carousel-price">
                                     <ins th:text="${product.price}"></ins> <del th:text="${product.vdef1}"></del>
@@ -200,14 +200,14 @@
                 <div class="col-md-12">
                     <div class="brand-wrapper">
                         <div class="brand-list">
-                            <img src="img/marque1.png" alt="">
-                            <img src="img/marque2.png" alt="">
-                            <img src="img/marque3.png" alt="">
-                            <img src="img/marque4.png" alt="">
-                            <img src="img/marque5.png" alt="">
-                            <img src="img/marque6.png" alt="">
-                            <img src="img/marque1.png" alt="">
-                            <img src="img/marque2.png" alt="">
+                            <img src="/img/marque1.png" alt="">
+                            <img src="/img/marque2.png" alt="">
+                            <img src="/img/marque3.png" alt="">
+                            <img src="/img/marque4.png" alt="">
+                            <img src="/img/marque5.png" alt="">
+                            <img src="/img/marque6.png" alt="">
+                            <img src="/img/marque1.png" alt="">
+                            <img src="/img/marque2.png" alt="">
                         </div>
                     </div>
                 </div>
@@ -222,10 +222,10 @@
                 <div class="col-md-4">
                     <div class="single-product-widget">
                         <h2 class="product-wid-title">Top Sellers</h2>
-                        <a href="" class="wid-view-more">View All</a>
+                        <a href="/shop" class="wid-view-more">View All</a>
                         <div th:each="product : ${bestSoldProducts}" class="single-wid-product">
-                            <a href="single-product.html"><img th:src="${product.imgUrl}" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product" th:text="${product.name}"></a></h2>
+                            <a th:href="@{/product/{id}(id=${product.id})}"><img th:src="${product.imgUrl}" alt="" class="product-thumb"></a>
+                            <h2><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a></h2>
                             <div class="product-wid-rating">
                                 <i th:each="index:${#numbers.sequence(1, product.vdef2)}" class="fa fa-star"></i>
                             </div>
@@ -238,10 +238,10 @@
                 <div class="col-md-4">
                     <div class="single-product-widget">
                         <h2 class="product-wid-title">Vu Récemment</h2>
-                        <a href="#" class="wid-view-more">View All</a>
+                        <a href="/shop" class="wid-view-more">View All</a>
                         <div class="single-wid-product" th:each="product,proStat : ${latestProducts}" th:if="${proStat.index} lt '3'">
-                            <a href="single-product"><img th:src="${product.imgUrl}" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product" th:text="${product.name}"></a></h2>
+                            <a th:href="@{/product/{id}(id=${product.id})}"><img th:src="${product.imgUrl}" alt="" class="product-thumb"></a>
+                            <h2><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a></h2>
                             <div class="product-wid-rating">
                                 <i th:each="index:${#numbers.sequence(1, product.vdef2)}" class="fa fa-star"></i>
                             </div>
@@ -254,10 +254,10 @@
                 <div class="col-md-4">
                     <div class="single-product-widget">
                         <h2 class="product-wid-title">Top New</h2>
-                        <a href="#" class="wid-view-more">View All</a>
+                        <a href="/shop" class="wid-view-more">View All</a>
                         <div class="single-wid-product" th:each="product,proStat : ${sliderProducts}" th:if="${proStat.index} lt '3'">
-                            <a href="single-product"><img th:src="${product.imgUrl}" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product" th:text="${product.name}"></a></h2>
+                            <a th:href="@{/product/{id}(id=${product.id})}"><img th:src="${product.imgUrl}" alt="" class="product-thumb"></a>
+                            <h2><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a></h2>
                             <div class="product-wid-rating">
                                 <i th:each="index:${#numbers.sequence(1, product.vdef2)}" class="fa fa-star"></i>
                             </div>
