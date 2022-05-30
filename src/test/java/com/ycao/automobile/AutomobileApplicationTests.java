@@ -4,6 +4,7 @@ import com.ycao.automobile.dao.IProductDao;
 import com.ycao.automobile.dao.ISystemDao;
 import com.ycao.automobile.model.ProductDomain;
 import com.ycao.automobile.model.SystemDomain;
+import com.ycao.automobile.utils.Commons;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,6 +38,13 @@ class AutomobileApplicationTests {
     void productTest() {
         List<ProductDomain> productDomains = iProductDao.getRelatedProducts("frein",0,0,5);
         System.out.println(productDomains);
+        System.out.println("ok");
+    }
+
+    @Test
+    void priceTest() {
+        String price = Commons.getTotalPrice("42,50 € ","10");
+        System.out.println(price);
         System.out.println("ok");
     }
 }

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="col-md-4" th:fragment="left-product-show(highNoteProducts,latestProducts)">
+    <div class="single-sidebar">
+        <h2 class="sidebar-title">Search Products</h2>
+        <form action="/searchProduct" method="post">
+            <input type="text" name="productName" placeholder="Search products...">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+
+    <div class="single-sidebar">
+        <h2 class="sidebar-title">Products</h2>
+        <div th:each="product:${highNoteProducts}" class="thubmnail-recent">
+            <img th:src="${product.imgUrl}" class="recent-thumb" alt="">
+            <h2><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a></h2>
+            <div class="product-sidebar-price">
+                <ins th:text="${product.price}"></ins> <del th:if="${product.vdef1}" th:text="${product.vdef1}"></del>
+            </div>
+        </div>
+    </div>
+
+    <div class="single-sidebar">
+        <h2 class="sidebar-title">Recent Posts</h2>
+        <ul>
+            <li th:each="product:${latestProducts}">
+                <a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

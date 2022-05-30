@@ -43,6 +43,12 @@ public class APIResponse<T> {
         return new APIResponse(CODE_SUCCESS, data);
     }
 
+    public static APIResponse success(String msg){
+        APIResponse apiResponse = APIResponse.success();
+        apiResponse.setMsg(msg);
+        return apiResponse;
+    }
+
     public static APIResponse fail(String msg){
         return new APIResponse(CODE_FAIL, msg);
     }

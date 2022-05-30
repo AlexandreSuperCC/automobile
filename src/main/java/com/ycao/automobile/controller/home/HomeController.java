@@ -1,13 +1,25 @@
 package com.ycao.automobile.controller.home;
 
+import com.ycao.automobile.constant.CommonConstant;
 import com.ycao.automobile.controller.BaseController;
+import com.ycao.automobile.exception.BusinessException;
 import com.ycao.automobile.model.ProductDomain;
+import com.ycao.automobile.model.UserDomain;
 import com.ycao.automobile.service.IHomeService;
+import com.ycao.automobile.service.IUserService;
+import com.ycao.automobile.utils.APIResponse;
+import com.ycao.automobile.utils.IPKit;
+import com.ycao.automobile.utils.MyUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -33,17 +45,84 @@ public class HomeController extends BaseController {
         return "home/index";
     }
 
-    @GetMapping(value = {"/cart"})
-    public String enterCart(HttpServletRequest request){
-        LOGGER.info("Enter cart method");
-        LOGGER.info("Exit cart method");
-        return "home/cart";
+    @GetMapping(value = "/login")
+    public String toLogin(HttpServletRequest request){
+
+        return "admin/login";
     }
 
-    @GetMapping(value = {"/checkout"})
-    public String enterCheckout(HttpServletRequest request){
-        LOGGER.info("Enter checkout method");
-        LOGGER.info("Exit checkout method");
-        return "home/checkout";
+    @GetMapping(value = "/register")
+    public String toRegister(HttpServletRequest request){
+
+        return "admin/register";
+    }
+
+    @Autowired
+    IUserService iUserService;
+
+    @PostMapping(value = "/admin/login")
+    @ResponseBody
+    public APIResponse toLogin(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam(name = "username", required = true)
+                    String username,
+            @RequestParam(name = "password", required = true)
+                    String password,
+            @RequestParam(name = "remeber_me", required = false)
+                    String remeber_me
+    ){
+
+        String ip= IPKit.getIpAddrByRequest(request); // Get ip and filter cached bugs when logging in
+        Integer error_count = cache.hget("login_error_count",ip);
+        try {
+            UserDomain userInfo = iUserService.login(username, password);
+            request.getSession().setAttribute(CommonConstant.Web.LOGIN_SESSION_KEY, userInfo);
+            //edited by ycao on 13/8/2021
+            request.getSession().setMaxInactiveInterval(60*30);//session 30min expired
+//            if (StringUtils.isNotBlank(remeber_me)) {
+//                MyUtils.setCookie(response, userInfo.getId());
+//            }
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            error_count = null == error_count ? 1 : error_count + 1;
+            if (error_count > 10000) {
+//            if (error_count > 3) {// debug proposal, should be restored
+                return APIResponse.fail("Vous avez entré le mauvais mot de passe plus de 3 fois, veuillez réessayer après 10 minutes");
+            }
+            cache.hset("login_error_count", ip,error_count, 10 * 60); // add ip filter
+            String msg = "login échoue";
+            if (e instanceof BusinessException) {
+                msg = ((BusinessException) e).getErrorCode();
+            } else {
+                LOGGER.error(msg, e);
+            }
+            return APIResponse.fail(msg);
+        }
+
+        return APIResponse.success();
+
+    }
+
+    /**
+     * log out
+     *
+     * @param session
+     * @param response
+     */
+    @GetMapping("/logout")
+    public void logout(HttpSession session, HttpServletResponse response) {
+        session.removeAttribute(CommonConstant.Web.LOGIN_SESSION_KEY);
+        Cookie cookie = new Cookie(CommonConstant.Web.USER_IN_COOKIE, "");
+        cookie.setValue(null);
+        cookie.setMaxAge(0);// Destroy cookies immediately
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        try {
+            response.sendRedirect("/index");
+        } catch (IOException e) {
+            e.printStackTrace();
+            LOGGER.error("log out échoue", e);
+        }
     }
 }
