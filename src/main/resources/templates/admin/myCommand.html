@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<header th:replace="common/header::headerFragment"></header>
+<body>
+
+<div th:replace="common/body-footer :: menu-top"></div>
+<div th:replace="common/body-footer :: site-branding"></div>
+
+<div class="mainmenu-area">
+    <div class="container">
+        <div class="row">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/index">Home</a></li>
+                    <li><a href="/shop">Shop page</a></li>
+                    <li><a href="/single-product">Single product</a></li>
+                    <li><a href="/cart">Cart</a></li>
+                    <li><a href="/checkout">Checkout</a></li>
+                    <li class="active"><a href="/admin/myCommand">Commande</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- End mainmenu area -->
+
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                    <h2>Commande</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End Page title area -->
+
+
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div th:replace="common/common-data :: left-product-show(${highNoteProducts},${latestProducts})"></div>
+
+            <div class="col-md-8">
+                <div class="product-content-right">
+                    <div th:each="command:${allCommands}" class="list-group" style="overflow-x: auto;">
+                        <a href="#" class="list-group-item active">
+                            <h4 th:text="${command.orderDay}" class="list-group-item-heading">
+                            </h4>
+                        </a>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>N° DE COMMANDE</th>
+                                <th>Montant Total</th>
+                                <th>Adresse de facturation</th>
+                                <th>Nom de facturation</th>
+                                <th>Email de facturation</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td th:text="${command.id}"></td>
+                                <td th:text="${command.totalPrice}"></td>
+                                <td th:text="${command.billingAddress}"></td>
+                                <td th:text="${command.billingName}"></td>
+                                <td th:text="${command.billingEmail}"></td>
+                            </tr>
+                            </tbody>
+                            <thead>
+                            <tr>
+                                <th>Numéro de téléphone de facturation</th>
+                                <th>Adresse d'expédition</th>
+                                <th>Nom d'expédition</th>
+                                <th>Commentaire</th>
+                                <th>Statut</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td th:text="${command.billingPhone}"></td>
+                                <td th:text="${command.shippingAddress}"></td>
+                                <td th:text="${command.shippingName}"></td>
+                                <td th:text="${command.content}"></td>
+                                <td th:if="${command.status} eq 0">En cours de traitement</td>
+                                <td th:if="${command.status} eq 1">Expédié</td>
+                                <td th:if="${command.status} eq 2">Livré</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="table">
+                            <thead>
+                            </thead>
+                            <tbody>
+                            <tr th:each="commandDetail:${command.commandDetailDomains}">
+                                <td>
+                                    <img th:src="${commandDetail.productDomain.imgUrl}">
+                                </td>
+                                <td th:text="${commandDetail.productDomain.name}"></td>
+                                <td th:text="${commandDetail.productDomain.marque}"></td>
+                                <td th:text="${commandDetail.productDomain.price}"></td>
+                                <td th:text="${commandDetail.productNum}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="common/body-footer :: footer-top"></div>
+<div th:replace="common/body-footer :: footer-bottom"></div>
+
+<!-- Latest jQuery form server -->
+<script src="https://code.jquery.com/jquery.min.js"></script>
+
+<!-- Bootstrap JS form CDN -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<!-- jQuery sticky menu -->
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.sticky.js"></script>
+
+<!-- jQuery easing -->
+<script src="/js/jquery.easing.1.3.min.js"></script>
+
+<!-- Main Script -->
+<script src="/js/main.js"></script>
+</body>
+</html>

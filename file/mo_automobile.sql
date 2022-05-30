@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 30/05/2022 12:02:21
+ Date: 31/05/2022 01:16:05
 */
 
 SET NAMES utf8mb4;
@@ -67,16 +67,28 @@ CREATE TABLE `t_command`  (
   `id` int NOT NULL,
   `status` int NOT NULL DEFAULT 0,
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `order_day` int NULL DEFAULT NULL,
+  `order_day` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `uid` int NULL DEFAULT NULL,
+  `billing_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `billing_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `billing_postcode` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `billing_email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `billing_phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `shipping_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `shipping_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `shipping_postcode` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `ts` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `dr` int NULL DEFAULT 0,
+  `total_price` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_command
 -- ----------------------------
+INSERT INTO `t_command` VALUES (50273, 0, 'package nicely, thanks', '2022-05-31 00:50:27', 0, 'Université de Technologie de Belfort-Montbéliard 15 rue des Capucins, Belfort  BELFORT  FR', 'CAO', '90000', 'yuancaocc@gmail.com', '+33668252048', 'GB', '', '', '2022-05-31 00:50:27', 0, '180.3 €');
+INSERT INTO `t_command` VALUES (481710, 0, 'package nicely, thanks', '2022-05-31 00:48:17', 0, 'Université de Technologie de Belfort-Montbéliard 15 rue des Capucins, Belfort  BELFORT  FR', 'CAO', '90000', 'yuancaocc@gmail.com', '+33668252048', 'Université de Technologie de Belfort-Montbéliard 15 rue des Capucins, Belfort  BELFORT  FR', 'CAO', '90000', '2022-05-31 00:48:17', 0, '180.3 €');
+INSERT INTO `t_command` VALUES (522330, 0, 'package nicely, thanks', '2022-05-31 00:52:23', 0, 'Université de Technologie de Belfort-Montbéliard 15 rue des Capucins, Belfort  BELFORT  FR', 'CAO', '90000', 'yuancaocc@gmail.com', '+33668252048', 'GB', '', '', '2022-05-31 00:52:23', 0, '180.3 €');
 
 -- ----------------------------
 -- Table structure for t_command_detail
@@ -95,6 +107,17 @@ CREATE TABLE `t_command_detail`  (
 -- ----------------------------
 -- Records of t_command_detail
 -- ----------------------------
+INSERT INTO `t_command_detail` VALUES (481730, 35232341, 7, 481710, '2022-05-31 00:48:17', 0);
+INSERT INTO `t_command_detail` VALUES (481740, 316295, 4, 481710, '2022-05-31 00:48:17', 0);
+INSERT INTO `t_command_detail` VALUES (481758, 668776, 20, 481710, '2022-05-31 00:48:17', 0);
+INSERT INTO `t_command_detail` VALUES (481777, 73809751, 4, 481710, '2022-05-31 00:48:17', 0);
+INSERT INTO `t_command_detail` VALUES (502759, 35232341, 7, 50273, '2022-05-31 00:50:27', 0);
+INSERT INTO `t_command_detail` VALUES (502761, 316295, 4, 50273, '2022-05-31 00:50:27', 0);
+INSERT INTO `t_command_detail` VALUES (502773, 73809751, 4, 50273, '2022-05-31 00:50:27', 0);
+INSERT INTO `t_command_detail` VALUES (522324, 316295, 4, 522330, '2022-05-31 00:52:23', 0);
+INSERT INTO `t_command_detail` VALUES (522342, 73809751, 4, 522330, '2022-05-31 00:52:23', 0);
+INSERT INTO `t_command_detail` VALUES (522355, 35232341, 7, 522330, '2022-05-31 00:52:23', 0);
+INSERT INTO `t_command_detail` VALUES (522378, 668776, 20, 522330, '2022-05-31 00:52:23', 0);
 
 -- ----------------------------
 -- Table structure for t_comment

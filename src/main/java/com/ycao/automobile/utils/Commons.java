@@ -43,11 +43,12 @@ public class Commons {
      * @return the total price witn €
      */
     public static String getTotalPrice(String price, String quantity){
-        if(price==null||quantity==null) return "";
+        if(price==null||quantity==null) return "0 €";
         String str1 = price.trim();
         str1 = str1.replace(",",".");
         str1 = str1.substring(0,str1.length()-1);
         Double priceDouble = Double.parseDouble(str1);
+        if(quantity.trim()==""||quantity=="null") return "0 €";
         Integer quantityInt = Integer.parseInt(quantity);
         Double res = priceDouble*quantityInt;
         BigDecimal valueDecimal = new BigDecimal(res);

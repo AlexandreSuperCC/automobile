@@ -30,7 +30,7 @@ public abstract class BaseController {
     protected Integer getCurrentUserId(HttpServletRequest request){
         assert request!=null;
         UserDomain userDomain = MyUtils.getLoginUser(request);
-        return userDomain.getId();
+        return userDomain==null?-1:userDomain.getId();
     }
 
 

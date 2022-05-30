@@ -141,4 +141,15 @@ public class MyUtils {
 
         return Integer.valueOf(str + rannum);// 当前时间
     }
+
+
+    /**
+     * get now() like in mysql
+     * @return the now time string
+     */
+    public static String getNowTimeString(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        return format.format(date);
+    }
 }

@@ -51,12 +51,6 @@ public class HomeController extends BaseController {
         return "admin/login";
     }
 
-    @GetMapping(value = "/register")
-    public String toRegister(HttpServletRequest request){
-
-        return "admin/register";
-    }
-
     @Autowired
     IUserService iUserService;
 
@@ -86,8 +80,8 @@ public class HomeController extends BaseController {
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             error_count = null == error_count ? 1 : error_count + 1;
-            if (error_count > 10000) {
-//            if (error_count > 3) {// debug proposal, should be restored
+//            if (error_count > 10000) {
+            if (error_count > 3) {// debug proposal, should be restored
                 return APIResponse.fail("Vous avez entré le mauvais mot de passe plus de 3 fois, veuillez réessayer après 10 minutes");
             }
             cache.hset("login_error_count", ip,error_count, 10 * 60); // add ip filter
@@ -124,5 +118,11 @@ public class HomeController extends BaseController {
             e.printStackTrace();
             LOGGER.error("log out échoue", e);
         }
+    }
+
+    @GetMapping(value = "/500")
+    public String toServerError(HttpServletRequest request){
+
+        return "common/500";
     }
 }
