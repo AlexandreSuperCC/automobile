@@ -38,7 +38,7 @@ public interface ICartDao extends JpaRepository<CartDomain,Integer> {
 
 
 
-    @Query(nativeQuery=true, value ="select cd.product_num from t_cart_detail cd inner join t_cart c on c.id = cd.cid where cd.pid=:pid and c.uid=:uid ")
+    @Query(nativeQuery=true, value ="select cd.product_num from t_cart_detail cd inner join t_cart c on c.id = cd.cid where c.dr=0 and cd.dr=0 and cd.pid=:pid and c.uid=:uid ")
     Integer getCurNumOfProdOfUser(@Param("uid") Integer uid,@Param("pid") Integer pid);
 
 

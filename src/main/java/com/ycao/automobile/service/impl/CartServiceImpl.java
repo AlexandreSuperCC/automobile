@@ -6,6 +6,8 @@ import com.ycao.automobile.model.ProductDomain;
 import com.ycao.automobile.service.ICartService;
 import com.ycao.automobile.utils.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,17 +22,20 @@ public class CartServiceImpl implements ICartService {
     ICartDao iCartDao;
 
     @Override
+    @Cacheable(value="cartCaches",key="'cartCaches-'+#userId")
     public List<ProductDomain> getCartOfUser(Integer userId) {
         assert userId!=null;
         return iProductDao.getAllProductsInCart(userId);
     }
 
     @Override
+    @CacheEvict(value="cartCaches",key="'cartCaches-'+#uid")
     public void deleteProductInCart(Integer pid, Integer uid) {
         iCartDao.deleteProductInCart(pid,uid);
     }
 
     @Override
+    @CacheEvict(value="cartCaches",key="'cartCaches-'+#uid")
     public void addProductInCart(Integer pid, Integer uid, Integer productNum) {
         assert uid!=null&&pid!=null;
         Integer cid = iCartDao.getCartIdOfUser(uid);
@@ -44,6 +49,7 @@ public class CartServiceImpl implements ICartService {
 
     }
 
+    @CacheEvict(value="cartCaches",key="'cartCaches-'+#uid")
     @Override
     public void updateProductInCart(Integer pid, Integer uid, Integer quantity) {
         iCartDao.updateQuantityProduct(pid, uid, quantity);

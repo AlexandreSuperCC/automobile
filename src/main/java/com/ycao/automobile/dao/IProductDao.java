@@ -89,7 +89,7 @@ public interface IProductDao extends JpaRepository<ProductDomain,Integer> {
      * @param uid the id of the user
      * @return
      */
-    @Query(nativeQuery=true, value ="SELECT p.id, p.NAME, p.img_url, p.price, p.status, p.dr, p.ts, p.pdid, p.marque, p.rate, p.vdef1, cd.product_num vdef2 FROM t_cart c INNER JOIN t_cart_detail cd ON c.id = cd.cid INNER JOIN t_produit p ON p.id = cd.pid INNER JOIN t_user u ON u.id = c.uid WHERE c.dr = 0 AND cd.dr = 0 AND u.id = 0 ORDER BY c.ts DESC ")
+    @Query(nativeQuery=true, value ="SELECT p.id, p.NAME, p.img_url, p.price, p.status, p.dr, p.ts, p.pdid, p.marque, p.rate, p.vdef1, cd.product_num vdef2 FROM t_cart c INNER JOIN t_cart_detail cd ON c.id = cd.cid INNER JOIN t_produit p ON p.id = cd.pid INNER JOIN t_user u ON u.id = c.uid WHERE c.dr = 0 AND cd.dr = 0 AND u.id = :uid ORDER BY c.ts DESC ")
     List<ProductDomain> getAllProductsInCart(@Param(value = "uid") int uid);
 
 }

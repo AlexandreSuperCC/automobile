@@ -17,12 +17,27 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class BaseInterceptor implements HandlerInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseInterceptor.class);
     private static final String USER_AGENT = "user-agent";
+
+    //the list of url that we should set the init variables
+    private static final List<String> initUrlList = new ArrayList<>();
+    static {
+        initUrlList.add("/");
+        initUrlList.add("/index");
+        initUrlList.add("/home");
+        initUrlList.add("/shop");
+        initUrlList.add("/single-product");
+        initUrlList.add("/cart");
+        initUrlList.add("/checkout");
+        initUrlList.add("/admin/myCommand");
+        initUrlList.add("/login");
+    }
 
     @Autowired
     private Commons commons;
@@ -70,13 +85,15 @@ public class BaseInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
         String url = httpServletRequest.getRequestURI();
-        List<ProductDomain> productsInCartList = iCartService.getCartOfUser(getCurrentUserId(httpServletRequest));
-        String totalPrice = getTotalPrice(productsInCartList);
-        if(!url.startsWith("/cart")){
-            httpServletRequest.setAttribute("totalPrice", totalPrice);
+        if(initUrlList.contains(url)||url.startsWith("/product")){
+            List<ProductDomain> productsInCartList = iCartService.getCartOfUser(getCurrentUserId(httpServletRequest));
+            String totalPrice = getTotalPrice(productsInCartList);
+            if(!url.startsWith("/cart")){
+                httpServletRequest.setAttribute("totalPrice", totalPrice);
+            }
+            httpServletRequest.setAttribute("numProductsInCart", productsInCartList==null?0:productsInCartList.size());
+            httpServletRequest.setAttribute("commons", commons);//Some utility classes and public methods
         }
-        httpServletRequest.setAttribute("numProductsInCart", productsInCartList==null?0:productsInCartList.size());
-        httpServletRequest.setAttribute("commons", commons);//Some utility classes and public methods
     }
 
     private Integer getCurrentUserId(HttpServletRequest request){

@@ -501,7 +501,7 @@
                     let obj = originalObj.filter((e)=>{
                         return e.id.toString()===id
                     })
-                    if(obj[0].vdef2.toString()===quantity){
+                    if(obj[0]&&obj[0].vdef2&&obj[0].vdef2.toString()===quantity){
                         continue;
                     }else{
                         sendObj.push({id:id,quantity:quantity})
