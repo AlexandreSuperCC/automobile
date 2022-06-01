@@ -8,9 +8,11 @@ backend part of project of MO54A22
 ### database
 **the database is mysql, run file/mo_automobile.sql to construct locally**
 in the concole :  
+``sql
 create database mo_automobile;
 use mo_automobile;
-source ${your absolute path}/mo_automobile.sql
+source ${your absolute path}/mo_automobile.sql;
+``
 
 
 ## main technique point/function
