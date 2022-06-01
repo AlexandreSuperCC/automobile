@@ -1,9 +1,16 @@
 # automobile_backend
 backend part of project of MO54A22
 
+## ATTENTION
+!!! If you want to modify the code, PLEASE create a branch and start a pullrequest !!!
+
 ## run
 ### database
-the database is mysql, run file/mo_automobile.sql to construct locally
+**the database is mysql, run file/mo_automobile.sql to construct locally**
+in the concole :  
+create database mo_automobile;
+use mo_automobile;
+source ${your absolute path}/mo_automobile.sql
 
 
 ## main technique point/function
