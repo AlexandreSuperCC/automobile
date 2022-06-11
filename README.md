@@ -1,6 +1,6 @@
 # automobile_backend
-backend part of project of MO54A22
-
+project of MO54A22
+**Suitable for mobile phone and computer view**
 ## ATTENTION
 !!! If you want to modify the code, PLEASE create a branch and start a pullrequest !!!
 
@@ -28,5 +28,6 @@ source ${your absolute path}/mo_automobile.sql;
 [Vous avez entré le mauvais mot de passe plus de 3 fois, veuillez réessayer après 10 minutes]
 using the technique of local cache to realize it
 * set cookie in the browser, so close the page and reopen, your account is still alive
+* suitable for mobile phone and computer view
 
 
