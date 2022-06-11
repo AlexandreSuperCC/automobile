@@ -24,7 +24,7 @@
                     <li><a href="/single-product">Single product</a></li>
                     <li><a href="/cart">Cart</a></li>
                     <li><a href="/checkout">Checkout</a></li>
-                    <li class="active"><a href="/admin/myCommand">Commande</a></li>
+                    <li class="active"><a href="/admin/myCommand">Command</a></li>
                 </ul>
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="product-bit-title text-center">
-                    <h2>Commande</h2>
+                    <h2>Command</h2>
                 </div>
             </div>
         </div>
@@ -60,11 +60,11 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>N° DE COMMANDE</th>
-                                <th>Montant Total</th>
-                                <th>Adresse de facturation</th>
-                                <th>Nom de facturation</th>
-                                <th>Email de facturation</th>
+                                <th>ORDER NUMBER</th>
+                                <th>Total amount</th>
+                                <th>Billing address</th>
+                                <th>Billing name</th>
+                                <th>Billing email</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -78,11 +78,11 @@
                             </tbody>
                             <thead>
                             <tr>
-                                <th>Numéro de téléphone de facturation</th>
-                                <th>Adresse d'expédition</th>
-                                <th>Nom d'expédition</th>
-                                <th>Commentaire</th>
-                                <th>Statut</th>
+                                <th>Billing phone number</th>
+                                <th>Shipping address</th>
+                                <th>Shipping Name</th>
+                                <th>Comment</th>
+                                <th>Status</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -91,9 +91,9 @@
                                 <td th:text="${command.shippingAddress}"></td>
                                 <td th:text="${command.shippingName}"></td>
                                 <td th:text="${command.content}"></td>
-                                <td th:if="${command.status} eq 0">En cours de traitement</td>
-                                <td th:if="${command.status} eq 1">Expédié</td>
-                                <td th:if="${command.status} eq 2">Livré</td>
+                                <td th:if="${command.status} eq 0">Being processed</td>
+                                <td th:if="${command.status} eq 1">Shipped</td>
+                                <td th:if="${command.status} eq 2">Delivered</td>
                             </tr>
                             </tbody>
                         </table>

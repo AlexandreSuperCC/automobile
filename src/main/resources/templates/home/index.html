@@ -22,9 +22,9 @@
                         <li class="active"><a href="/index">Home</a></li>
                         <li><a href="/shop">Shop page</a></li>
                         <li><a href="/single-product">Single produit</a></li>
-                        <li><a href="/cart">Panier</a></li>
-                        <li><a href="/checkout">Achetez</a></li>
-                        <li><a href="/admin/myCommand">Commande</a></li>
+                        <li><a href="/cart">Cart</a></li>
+                        <li><a href="/checkout">Checkout</a></li>
+                        <li><a href="/admin/myCommand">Command</a></li>
                     </ul>
                 </div>
             </div>
@@ -153,7 +153,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="single-product-widget">
-                        <h2 class="product-wid-title">Vu Récemment</h2>
+                        <h2 class="product-wid-title">Recently Viewed</h2>
                         <a href="/shop" class="wid-view-more">View All</a>
                         <div class="single-wid-product" th:each="product,proStat : ${latestProducts}" th:if="${proStat.index} lt '3'">
                             <a th:href="@{/product/{id}(id=${product.id})}"><img th:src="${product.imgUrl}" alt="" class="product-thumb"></a>

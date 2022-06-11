@@ -28,7 +28,7 @@
                           <li><a href="/single-product">Single product</a></li>
                           <li><a href="/cart">Cart</a></li>
                           <li><a href="/checkout">Checkout</a></li>
-                          <li><a href="/admin/myCommand">Commande</a></li>
+                          <li><a href="/admin/myCommand">Command</a></li>
                       </ul>
                   </div>
               </div>
@@ -50,12 +50,12 @@
     <!--collapse menu start-->
     <div class="container">
         <div class="row">
-            <h2 th:text="|${numProducts} produits trouvés|"></h2>
+            <h2 th:text="|${numProducts} products found|"></h2>
             <hr>
             <div class="dropdown">
                 <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" data-target="#"
                    href="javascript:;">
-                    CHOISIR VOTRE CATÉGORIES <span class="caret"></span>
+                    CHOOSE YOUR CATEGORIES <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
                     <li th:each="system : ${allSystems}" class="dropdown-submenu">

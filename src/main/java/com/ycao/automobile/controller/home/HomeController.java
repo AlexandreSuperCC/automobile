@@ -82,10 +82,10 @@ public class HomeController extends BaseController {
             error_count = null == error_count ? 1 : error_count + 1;
 //            if (error_count > 10000) {
             if (error_count > 3) {// debug proposal, should be restored
-                return APIResponse.fail("Vous avez entré le mauvais mot de passe plus de 3 fois, veuillez réessayer après 10 minutes");
+                return APIResponse.fail("You entered the wrong password more than 3 times, please try again after 10 minutes");
             }
             cache.hset("login_error_count", ip,error_count, 10 * 60); // add ip filter
-            String msg = "login échoue";
+            String msg = "login fails";
             if (e instanceof BusinessException) {
                 msg = ((BusinessException) e).getErrorCode();
             } else {
@@ -116,7 +116,7 @@ public class HomeController extends BaseController {
             response.sendRedirect("/index");
         } catch (IOException e) {
             e.printStackTrace();
-            LOGGER.error("log out échoue", e);
+            LOGGER.error("log out fails", e);
         }
     }
 

@@ -9,12 +9,12 @@
                     <ul>
                         <li>
                             <a href="" th:if="${session.login_user}">
-                                <i class="fa fa-user" th:text="| Bienvenue ${session.login_user.name}|"></i>
+                                <i class="fa fa-user" th:text="| Welcome ${session.login_user.name}|"></i>
                             </a>
                         </li>
-                        <li><a href="/admin/myCommand"><i class="fa fa-user"></i> Mon compte</a></li>
-                        <li><a href="/cart"><i class="fa fa-user"></i> Mon panier</a></li>
-                        <li><a href="/checkout"><i class="fa fa-user"></i> Passez la commande</a></li>
+                        <li><a href="/admin/myCommand"><i class="fa fa-user"></i> My Account</a></li>
+                        <li><a href="/cart"><i class="fa fa-user"></i> My cart</a></li>
+                        <li><a href="/checkout"><i class="fa fa-user"></i> Checkout</a></li>
                         <li><a href="/login" th:if="!${session.login_user}"><i class="fa fa-user"></i> Login</a></li>
                         <li><a href="/logout" th:if="${session.login_user}"><i class="fa fa-user"></i> Logout</a></li>
                     </ul>
@@ -59,7 +59,7 @@
 
             <div class="col-sm-6">
                 <div class="shopping-item">
-                    <a href="/cart">Panier - <span class="cart-amunt" th:text="${totalPrice}"></span> <i class="fa fa-shopping-cart"></i> <span class="product-count" th:text="${numProductsInCart}"></span></a>
+                    <a href="/cart">Cart - <span class="cart-amunt" th:text="${totalPrice}"></span> <i class="fa fa-shopping-cart"></i> <span class="product-count" th:text="${numProductsInCart}"></span></a>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
         <div class="row">
             <div class="col-md-3 col-sm-6">
                 <div class="footer-about-us">
-                    <h2>u<span>Stora</span></h2>
+                    <h2>Feu<span>Rouge</span></h2>
                     <p>Welcome to our website Feu Rouge, the mandatory stop for the purchase of all your car parts. From windscreen wipers to brake discs, you will provide the product you need.</p>
                     <div class="footer-social">
                         <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
@@ -130,7 +130,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="copyright">
-                    <p>&copy; 2015 uCommerce. All Rights Reserved. <a href="http://www.freshdesignweb.com" target="_blank">freshDesignweb.com</a></p>
+                    <p>&copy; 2022 Feu Rouge. All Rights Reserved. <a href="http://www.utbm.fr" target="_blank">utbm.fr</a></p>
                 </div>
             </div>
 

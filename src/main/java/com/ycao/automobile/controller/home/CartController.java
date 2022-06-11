@@ -79,7 +79,7 @@ public class CartController extends BaseController {
             iCartService.deleteProductInCart(id,getCurrentUserId(request));
 
             LOGGER.info("Exit delete product in cart method");
-            return APIResponse.success("Supprimer avec succès");
+            return APIResponse.success("Delete succeeds");
 
         }catch (Exception e){
 
@@ -99,7 +99,7 @@ public class CartController extends BaseController {
             iCartService.addProductInCart(pid,getCurrentUserId(request),productNum);
 
             LOGGER.info("Exit add product in cart method");
-            return APIResponse.success("Ajouter avec succès");
+            return APIResponse.success("Add succeeds");
 
         }catch (Exception e){
 
@@ -120,7 +120,7 @@ public class CartController extends BaseController {
             }
 
             LOGGER.info("Exit update product in cart method");
-            return APIResponse.success("Update avec succès");
+            return APIResponse.success("Update succeeds");
 
         }catch (Exception e){
 
