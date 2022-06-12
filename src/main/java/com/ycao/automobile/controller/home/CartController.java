@@ -87,7 +87,14 @@ public class CartController extends BaseController {
         }
     }
 
-    @PostMapping(value = "/admin/addProductCart/{pid}/{productNum}")
+    /**
+     * to suitable for both two ways of submit: <a href ; ajax
+     * @param request
+     * @param pid
+     * @param productNum
+     * @return
+     */
+    @RequestMapping(value = "/admin/addProductCart/{pid}/{productNum}")
     @ResponseBody
     public APIResponse addCartProduct(HttpServletRequest request,
                                       @PathVariable Integer pid,

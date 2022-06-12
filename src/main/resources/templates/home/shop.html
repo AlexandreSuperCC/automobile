@@ -91,7 +91,7 @@
                             <ins th:text="${product.price}"></ins>
                         </div>
                         <div class="product-option-shop">
-                            <a onclick="addOneToCart(this)"
+                            <a onclick="addOneToCart(this)" th:if="${session.login_user}"
                                th:attr="data-pid=${product.id}" class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">Add to cart</a>
                         </div>
                     </div>
@@ -189,7 +189,7 @@
                  let html2 = product.vdef1?`<del>${product.vdef1}</del>`:''
                  let html3 =               `</div>
                                 <div class="product-option-shop">
-                                    <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                    <a class="add_to_cart_button" rel="nofollow" href="/cart/admin/addProductCart/${product.id}/1">Add to cart</a>
                                 </div>
                             </div>
                         </div>`
@@ -245,7 +245,7 @@
                 let html2 = product.vdef1?`<del>${product.vdef1}</del>`:''
                 let html3 =               `</div>
                                 <div class="product-option-shop">
-                                    <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                    <a class="add_to_cart_button" rel="nofollow" href="/cart/admin/addProductCart/${product.id}/1">Add to cart</a>
                                 </div>
                             </div>
                         </div>`
