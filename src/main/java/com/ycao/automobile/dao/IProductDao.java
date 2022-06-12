@@ -44,7 +44,7 @@ public interface IProductDao extends JpaRepository<ProductDomain,Integer> {
      * @param num how many comments are wanted
      * @return ProductDomain
      */
-    @Query(nativeQuery=true, value ="SELECT p.* FROM t_produit p RIGHT JOIN t_comment c ON c.pid = p.id WHERE p.dr = 0 and c.dr=0 GROUP BY p.NAME ORDER BY count(*) DESC LIMIT :start,:num")
+    @Query(nativeQuery=true, value ="SELECT p.* FROM t_produit p INNER JOIN ( SELECT pid, count(*) ct FROM t_comment WHERE dr = 0 GROUP BY pid ) c ON c.pid = p.id WHERE p.dr = 0 ORDER BY c.ct DESC LIMIT :start,:num ")
     List<ProductDomain> getBestSeller(@Param(value = "start") int start, @Param(value = "num") int num);
 
     @Query(nativeQuery=true, value ="SELECT count(*) from t_produit where dr = 0 ")
