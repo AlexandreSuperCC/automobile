@@ -59,10 +59,10 @@
                 </a>
                 <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
                     <li th:each="system : ${allSystems}" class="dropdown-submenu">
-                        <a th:text="${system.name}" tabindex="-1"></a>
+                        <a th:text="${system.name}" οnclick=" return false; " tabindex="-1"></a>
                         <ul class="dropdown-menu">
                             <li th:each="piece : ${system.pieceDomainList}" class="dropdown-submenu">
-                                <a th:text="${piece.name}"></a>
+                                <a th:text="${piece.name}" οnclick=" return false; "></a>
                                 <ul class="dropdown-menu">
                                     <li th:each="subPiece : ${piece.subPieceDomainList}">
                                         <a th:text="${subPiece.name}" href="javascript:;" th:attr="data-pdid=${subPiece.id},data-pdname=${subPiece.name},data-pname=${piece.name},data-sname=${system.name}" onclick="getProductsWithPdid(this)"></a>
@@ -166,7 +166,7 @@
             });
         }
         function showProducts(productsArr,subPieceName,pieceName,systemName){
-            document.querySelector('body > div.container > div > h2').innerHTML=productsArr.length>0?productsArr.length+' produits trouvés':'Aucun produit trouvé';
+            document.querySelector('body > div.container > div > h2').innerHTML=productsArr.length>0?productsArr.length+' products found':'No product found';
             document.querySelector('#dLabel').innerHTML= systemName +' | '+ pieceName +' | '+ subPieceName;
 
             //clear pagination
