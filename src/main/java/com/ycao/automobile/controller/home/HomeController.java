@@ -26,7 +26,7 @@ public class HomeController extends BaseController {
     @Autowired
     IHomeService iHomeService;
 
-    @GetMapping(value = {"","/index"})
+    @RequestMapping(value = {"","/index"})
     public String enterIndex(HttpServletRequest request){
         LOGGER.info("Enter index method");
         //slider data
