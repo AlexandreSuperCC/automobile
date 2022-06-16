@@ -5,7 +5,7 @@
             var slider = $('#bxslider-home4').bxSlider({
                 nextText:'<i class="fa fa-angle-right"></i>',
                 prevText:'<i class="fa fa-angle-left"></i>',
-                auto: true,
+                auto: false,//control if it will move automatically
                 onSliderLoad:function(currentIndex){
                     $('#bxslider-home4 li').find('.caption').each(function(i){
                         $(this).show().addClass('animated fadeInRight').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
